@@ -1,125 +1,124 @@
-# Unity Background Location
+# Setting Up Background Location in Unity with LAN LiveLocation Plugin
 
-Background location sample project using LAN LiveLocation plugin.
+This guide walks you through setting up background location functionality in Unity using the LAN LiveLocation plugin. Follow the steps below to ensure a smooth integration.
 
-## **Supported Platform**
+---
 
-- Android OS *(Tested on Android 10 and Android 14 devices)*
-- iOS *(Coming soon)*
+## Supported Platforms
 
-## **Requirements and Installation**
+- **Android OS**: Tested on Android 10 and Android 14 devices.
+- **iOS**: Coming soon.
 
-1. Install `External Dependency Manager for Unity` :
+---
 
-    - Follows [this](https://openupm.com/packages/com.google.external-dependency-manager/#modal-manualinstallation) step.
-    - Or, download and import [this](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage) custom package.
+## Requirements and Installation
 
-2. Install `Live Location` using the Package Manager :
+### Step 1: Install External Dependency Manager for Unity
 
-    - Open the Package Manager Window.
-    - Click the add button in the Package Manager's toolbar.
-    - Choose 'Add package from git url'.
-    - Copy and paste `https://github.com/krlan2789/Unity-LAN-LiveLocation-Plugin.git` into the textbox, then enter.
+To manage dependencies, you need to install the External Dependency Manager for Unity:
 
-    <img class="use-github-assets" src="./Screenshot/Add_package_from_git_url.png" height="auto" width="640px" />
+- Follow the [manual installation guide](https://openupm.com/packages/com.google.external-dependency-manager/#modal-manualinstallation).
+- Alternatively, download and import the [latest custom package](https://github.com/googlesamples/unity-jar-resolver/blob/master/external-dependency-manager-latest.unitypackage).
 
-3. Make sure minimum API Level set to `API Level 26` :
+### Step 2: Install the Live Location Plugin
 
-    <img class="use-github-assets" src="./Screenshot/Min_Android_API_Level.png" height="auto" width="640px" />
+Add the Live Location plugin to your Unity project:
 
-4. Check following build settings :
+1. Open the **Package Manager** window.
+2. Click the **Add** button in the toolbar.
+3. Select **Add package from git URL**.
+4. Paste the following URL: `https://github.com/krlan2789/Unity-LAN-LiveLocation-Plugin.git`.
 
-    <img class="use-github-assets" src="./Screenshot/Build_Settings.png" height="auto" width="640px" />
+<img class="use-github-assets" src="./Screenshot/Add_package_from_git_url.png" height="auto" width="640px" />
 
-5. Add required-optional permissions to `Assets/Plugins/Android/AndroidManifest.xml` :
+### Step 3: Set Minimum API Level
 
-    ```XML
-    ...
-    <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.LAN.BackgroundLocation" xmlns:tools="http://schemas.android.com/tools">
+Ensure the minimum API level is set to **API Level 26**.
 
-    <!-- Required permissions -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" android:minSdkVersion="29" />
-    <!-- Required permissions -->
+<img class="use-github-assets" src="./Screenshot/Min_Android_API_Level.png" height="auto" width="640px" />
 
-    <!-- Optional permissions -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <!-- Optional permissions -->
+### Step 4: Verify Build Settings
 
-    <application>
-        <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector">
-    ...
-    ```
+Check and configure the required build settings.
 
-6. Insert script below into `Assets\Plugins\Android\launcherTemplate.gradle` :
+<img class="use-github-assets" src="./Screenshot/Build_Settings.png" height="auto" width="640px" />
 
-    ```Gradle
-    ...
-    android {
-        ...
-        **PACKAGING_OPTIONS****PLAY_ASSET_PACKS****SPLITS**
+### Step 5: Update AndroidManifest.xml
 
-        // Requirement for Live Location
-        packagingOptions {
-            pickFirst('META-INF/okio.kotlin_module')
-            pickFirst('META-INF/kotlinx_coroutines_core.version')
-        }
-        // Requirement for Live Location
+Add the following permissions to `Assets/Plugins/Android/AndroidManifest.xml`:
 
-        **BUILT_APK_LOCATION**
-        ...
-    }
-    ```
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.LAN.BackgroundLocation" xmlns:tools="http://schemas.android.com/tools">
 
-7. Insert script below into `Assets\Plugins\Android\mainTemplate.gradle` :
+     <!-- Required permissions -->
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" android:minSdkVersion="29" />
+     <!-- Optional permissions -->
+     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
-    ```Gradle
-    ...
-    // Android Resolver Exclusions End
-    android {
-        ...
-        **PACKAGING_OPTIONS**
+     <application>
+          <activity android:name="com.unity3d.player.UnityPlayerActivity" android:theme="@style/UnityThemeSelector">
+          ...
+     </application>
+</manifest>
+```
 
-        // Requirement for Live Location
-        packagingOptions {
-            pickFirst('META-INF/okio.kotlin_module')
-            pickFirst('META-INF/kotlinx_coroutines_core.version')
-        }
-        // Requirement for Live Location
-    }
-    **IL_CPP_BUILD_SETUP**
-    ...
-    ```
+### Step 6: Update launcherTemplate.gradle
 
-8.  Insert script below into `Assets\Plugins\Android\gradleTemplate.properties` :
+Insert the following script into `Assets\Plugins\Android\launcherTemplate.gradle`:
 
-    ```Properties
-    ...
-    android.enableJetifier=true
-    # Android Resolver Properties End
-    **ADDITIONAL_PROPERTIES**
+```gradle
+android {
+     ...
+     packagingOptions {
+          pickFirst('META-INF/okio.kotlin_module')
+          pickFirst('META-INF/kotlinx_coroutines_core.version')
+     }
+}
+```
 
-    # Requirement for Live Location
-    android.suppressUnsupportedCompileSdk=34
-    # Requirement for Live Location
-    ```
+### Step 7: Update mainTemplate.gradle
 
-<br>
+Insert the following script into `Assets\Plugins\Android\mainTemplate.gradle`:
 
-## **Error When Some Build Settings Do Not Match**
+```gradle
+android {
+     ...
+     packagingOptions {
+          pickFirst('META-INF/okio.kotlin_module')
+          pickFirst('META-INF/kotlinx_coroutines_core.version')
+     }
+}
+```
 
-1. `Custom Gradle Properties Template` :
+### Step 8: Update gradleTemplate.properties
 
-    <img class="use-github-assets" src="./Screenshot/Error_gradleproperties_unchecked_popup.png" height="auto" width="640px" />
-    
-    <img class="use-github-assets" src="./Screenshot/Error_gradleproperties_unchecked.png" height="auto" width="640px" />
+Insert the following script into `Assets\Plugins\Android\gradleTemplate.properties`:
 
-2. `Custom Launcher Gradle` and `Custom Main Gradle` :
+```properties
+android.enableJetifier=true
+android.suppressUnsupportedCompileSdk=34
+```
 
-    <img class="use-github-assets" src="./Screenshot/Error_manifestgradle_unchecked_popup.png" height="auto" width="640px" />
-    
-    <img class="use-github-assets" src="./Screenshot/Error_manifestgradle_unchecked.png" height="auto" width="640px" />
+---
 
+## Common Errors and Troubleshooting
+
+### `Custom Gradle Properties Template` :
+
+<img class="use-github-assets" src="./Screenshot/Error_gradleproperties_unchecked_popup.png" height="auto" width="640px" />
+
+<img class="use-github-assets" src="./Screenshot/Error_gradleproperties_unchecked.png" height="auto" width="640px" />
+
+### `Custom Launcher Gradle` and `Custom Main Gradle` :
+
+<img class="use-github-assets" src="./Screenshot/Error_manifestgradle_unchecked_popup.png" height="auto" width="640px" />
+
+<img class="use-github-assets" src="./Screenshot/Error_manifestgradle_unchecked.png" height="auto" width="640px" />
+
+---
+
+By following these steps, you can successfully integrate background location functionality into your Unity project using the LAN LiveLocation plugin. For further assistance, refer to the plugin's documentation or community forums.
