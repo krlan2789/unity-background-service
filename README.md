@@ -121,4 +121,4 @@ android.suppressUnsupportedCompileSdk=34
 
 ---
 
-By following these steps, you can successfully integrate background location functionality into your Unity project using the LAN LiveLocation plugin. For further assistance, refer to the plugin's documentation or community forums.
+By following these steps, you can successfully integrate background location functionality into your Unity project using the LAN LiveLocation plugin
