@@ -1,3 +1,11 @@
+---
+title: "Android Background Location for Unity"
+description: "Live Location plugin example for Unity and Android target platform."
+date: "2024-07-27"
+tags: ["unity","unitypackage","android","plugin","gps","location","background-service"]
+github: "https://github.com/krlan2789/Unity-Background-Location"
+---
+
 # Setting Up Background Location in Unity with LAN LiveLocation Plugin
 
 This guide walks you through setting up background location functionality in Unity using the LAN LiveLocation plugin. Follow the steps below to ensure a smooth integration.
